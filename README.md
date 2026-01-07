@@ -4,7 +4,6 @@ A powerful, flexible, and database-driven access control package for Laravel tha
 
 ## Features
 
-- **Universal Model Support** - Works with any Eloquent model
 - **Database-Driven Rules** - Configure access rules in your database
 - **Flexible Resolution Logic** - Choose between ANY, ALL, or PRIORITY rule matching
 - **Priority/Weight System** - Control rule execution order
@@ -13,9 +12,7 @@ A powerful, flexible, and database-driven access control package for Laravel tha
 - **Smart Query Filtering** - Automatically filter collections based on access rules
 - **Laravel Integration** - Works with Gates and Policies
 - **Spatie Permission Integration** - Works with roles and permissions
-- **Polymorphic Design** - Assign rules to users, roles, or any model
 - **Fluent API** - Easy rule creation
-- **Artisan Commands** - Generate rule classes quickly
 
 ## Installation
 
@@ -24,7 +21,7 @@ A powerful, flexible, and database-driven access control package for Laravel tha
 Since this is a local package, it's already added to your `composer.json`:
 
 ```bash
-composer update yourvendor/laravel-model-acl
+composer update othmanhaba/laravel-model-acl
 ```
 
 ### 2. Publish configuration and migrations
@@ -47,7 +44,7 @@ php artisan migrate
 **For models that need access control (e.g., Ticket, Post):**
 
 ```php
-use YourVendor\LaravelModelAcl\Traits\HasAccessRules;
+use othmanhaba\LaravelModelAcl\Traits\HasAccessRules;
 
 class Ticket extends Model
 {
@@ -60,7 +57,7 @@ class Ticket extends Model
 **For users/roles that access models:**
 
 ```php
-use YourVendor\LaravelModelAcl\Traits\CanBeRestricted;
+use othmanhaba\LaravelModelAcl\Traits\CanBeRestricted;
 
 class Employee extends Authenticatable
 {
@@ -75,8 +72,8 @@ class Employee extends Authenticatable
 #### Option A: Using Built-in Rules
 
 ```php
-use YourVendor\LaravelModelAcl\Models\AccessRule;
-use YourVendor\LaravelModelAcl\Rules\StatusRule;
+use othmanhaba\LaravelModelAcl\Models\AccessRule;
+use othmanhaba\LaravelModelAcl\Rules\StatusRule;
 
 $rule = AccessRule::create([
     'name' => 'View Pending Tickets',
@@ -108,7 +105,7 @@ This creates `app/Rules/Access/TicketDepartmentRule.php`:
 
 namespace App\Rules\Access;
 
-use YourVendor\LaravelModelAcl\Rules\BaseAccessRule;
+use othmanhaba\LaravelModelAcl\Rules\BaseAccessRule;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Contracts\Auth\Authenticatable;
 
@@ -153,7 +150,7 @@ $rule = AccessRule::create([
 #### Option A: Using the Service
 
 ```php
-use YourVendor\LaravelModelAcl\Services\AccessControlService;
+use othmanhaba\LaravelModelAcl\Services\AccessControlService;
 
 $service = app(AccessControlService::class);
 
@@ -199,7 +196,7 @@ Restrict access based on model status:
 
 ```php
 AccessRule::create([
-    'rule_class' => \YourVendor\LaravelModelAcl\Rules\StatusRule::class,
+    'rule_class' => \othmanhaba\LaravelModelAcl\Rules\StatusRule::class,
     'settings' => [
         'statuses' => ['pending', 'approved'],
         'status_column' => 'status', // optional, defaults to 'status'
@@ -213,7 +210,7 @@ Restrict access based on date range:
 
 ```php
 AccessRule::create([
-    'rule_class' => \YourVendor\LaravelModelAcl\Rules\DateRangeRule::class,
+    'rule_class' => \othmanhaba\LaravelModelAcl\Rules\DateRangeRule::class,
     'settings' => [
         'from' => '2024-01-01',
         'to' => '2024-12-31',
@@ -228,7 +225,7 @@ Restrict to owned records only:
 
 ```php
 AccessRule::create([
-    'rule_class' => \YourVendor\LaravelModelAcl\Rules\OwnershipRule::class,
+    'rule_class' => \othmanhaba\LaravelModelAcl\Rules\OwnershipRule::class,
     'settings' => [
         'owner_column' => 'user_id', // Model column
         'user_id_column' => 'id',    // User column
@@ -243,7 +240,7 @@ Match model attributes with user attributes or static values:
 ```php
 // Match user's department
 AccessRule::create([
-    'rule_class' => \YourVendor\LaravelModelAcl\Rules\AttributeRule::class,
+    'rule_class' => \othmanhaba\LaravelModelAcl\Rules\AttributeRule::class,
     'settings' => [
         'model_attribute' => 'department_id',
         'user_attribute' => 'department_id',
@@ -253,7 +250,7 @@ AccessRule::create([
 
 // Static value
 AccessRule::create([
-    'rule_class' => \YourVendor\LaravelModelAcl\Rules\AttributeRule::class,
+    'rule_class' => \othmanhaba\LaravelModelAcl\Rules\AttributeRule::class,
     'settings' => [
         'model_attribute' => 'priority',
         'static_value' => 'high',
@@ -388,7 +385,7 @@ $role->assignAccessRule($rule);
 For complete control, implement the `Authorizable` interface:
 
 ```php
-use YourVendor\LaravelModelAcl\Contracts\Authorizable;
+use othmanhaba\LaravelModelAcl\Contracts\Authorizable;
 
 class Ticket extends Model implements Authorizable
 {
@@ -421,7 +418,7 @@ class Ticket extends Model implements Authorizable
 ### AccessControlService
 
 ```php
-$service = app(\YourVendor\LaravelModelAcl\Services\AccessControlService::class);
+$service = app(\othmanhaba\LaravelModelAcl\Services\AccessControlService::class);
 
 // Check if user can perform action on model
 $service->can($user, 'view', $ticket): bool
@@ -474,7 +471,7 @@ class Ticket extends Model
 }
 
 // New
-use YourVendor\LaravelModelAcl\Traits\HasAccessRules;
+use othmanhaba\LaravelModelAcl\Traits\HasAccessRules;
 
 class Ticket extends Model
 {
@@ -512,7 +509,7 @@ use App\Services\TicketAccessService;
 TicketAccessService::can($user, 'view', $ticket);
 
 // New
-use YourVendor\LaravelModelAcl\Services\AccessControlService;
+use othmanhaba\LaravelModelAcl\Services\AccessControlService;
 app(AccessControlService::class)->can($user, 'view', $ticket);
 
 // Or use trait
