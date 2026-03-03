@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace YourVendor\LaravelModelAcl\Services;
+namespace OthmanHaba\LaravelModelAcl\Services;
 
-use YourVendor\LaravelModelAcl\Contracts\RuleResolverContract;
-use YourVendor\LaravelModelAcl\Contracts\AccessRuleContract;
+use OthmanHaba\LaravelModelAcl\Contracts\RuleResolverContract;
+use OthmanHaba\LaravelModelAcl\Contracts\AccessRuleContract;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Support\Collection;
@@ -35,7 +35,6 @@ class RuleResolver implements RuleResolverContract
         $sortedRules = $this->sortByPriority($rules);
 
         return match ($resolutionLogic) {
-            'any' => $this->resolveAny($sortedRules, $user, $model),
             'all' => $this->resolveAll($sortedRules, $user, $model),
             'priority' => $this->resolvePriority($sortedRules, $user, $model),
             default => $this->resolveAny($sortedRules, $user, $model),

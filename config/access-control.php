@@ -133,10 +133,10 @@ return [
     |
     */
     'built_in_rules' => [
-        'status' => \YourVendor\LaravelModelAcl\Rules\StatusRule::class,
-        'date_range' => \YourVendor\LaravelModelAcl\Rules\DateRangeRule::class,
-        'ownership' => \YourVendor\LaravelModelAcl\Rules\OwnershipRule::class,
-        'attribute' => \YourVendor\LaravelModelAcl\Rules\AttributeRule::class,
+        'status' => \OthmanHaba\LaravelModelAcl\Rules\StatusRule::class,
+        'date_range' => \OthmanHaba\LaravelModelAcl\Rules\DateRangeRule::class,
+        'ownership' => \OthmanHaba\LaravelModelAcl\Rules\OwnershipRule::class,
+        'attribute' => \OthmanHaba\LaravelModelAcl\Rules\AttributeRule::class,
     ],
 
     /*

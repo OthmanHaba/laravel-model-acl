@@ -2,8 +2,9 @@
 
 declare(strict_types=1);
 
-namespace YourVendor\LaravelModelAcl\Rules;
+namespace OthmanHaba\LaravelModelAcl\Rules;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Contracts\Auth\Authenticatable;
 
@@ -16,12 +17,13 @@ class OwnershipRule extends BaseAccessRule
     protected ?string $userIdColumn;
 
     public function __construct(
-        ?string $owner_column = 'user_id',
-        ?string $user_id_column = 'id',
+        ?string          $owner_column = 'user_id',
+        ?string          $user_id_column = 'id',
         ?Authenticatable $_user = null,
-        ?int $_priority = null,
-        ?bool $_is_deny_rule = null
-    ) {
+        ?int             $_priority = null,
+        ?bool            $_is_deny_rule = null
+    )
+    {
         parent::__construct($_user, $_priority, $_is_deny_rule);
 
         $this->ownerColumn = $owner_column ?? 'user_id';
@@ -36,7 +38,7 @@ class OwnershipRule extends BaseAccessRule
         return $ownerId == $userId;
     }
 
-    public function scope($query, Authenticatable $user)
+    public function scope(Builder $query, Authenticatable $user): Builder
     {
         $userId = data_get($user, $this->userIdColumn);
 

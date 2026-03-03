@@ -2,8 +2,9 @@
 
 declare(strict_types=1);
 
-namespace YourVendor\LaravelModelAcl\Rules;
+namespace OthmanHaba\LaravelModelAcl\Rules;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Carbon\Carbon;
@@ -18,13 +19,14 @@ class DateRangeRule extends BaseAccessRule
     protected string $dateColumn;
 
     public function __construct(
-        ?string $from = null,
-        ?string $to = null,
-        ?string $date_column = 'created_at',
+        ?string          $from = null,
+        ?string          $to = null,
+        ?string          $date_column = 'created_at',
         ?Authenticatable $_user = null,
-        ?int $_priority = null,
-        ?bool $_is_deny_rule = null
-    ) {
+        ?int             $_priority = null,
+        ?bool            $_is_deny_rule = null
+    )
+    {
         parent::__construct($_user, $_priority, $_is_deny_rule);
 
         $this->from = $from ? Carbon::parse($from)->startOfDay() : null;
@@ -40,7 +42,7 @@ class DateRangeRule extends BaseAccessRule
 
         $modelDate = data_get($model, $this->dateColumn);
 
-        if (!$modelDate instanceof Carbon && !$modelDate instanceof \DateTime) {
+        if (!$modelDate instanceof Carbon) {
             $modelDate = Carbon::parse($modelDate);
         }
 
@@ -59,7 +61,7 @@ class DateRangeRule extends BaseAccessRule
         return true;
     }
 
-    public function scope($query, Authenticatable $user)
+    public function scope(Builder $query, Authenticatable $user): Builder
     {
         if ($this->from && $this->to) {
             $query->whereBetween($this->dateColumn, [$this->from, $this->to]);

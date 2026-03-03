@@ -2,8 +2,9 @@
 
 declare(strict_types=1);
 
-namespace YourVendor\LaravelModelAcl\Models;
+namespace OthmanHaba\LaravelModelAcl\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -57,6 +58,7 @@ class AccessRule extends Model
     /**
      * Scope to get active rules only
      */
+
     public function scopeActive($query)
     {
         return $query->where('active', true);
@@ -77,7 +79,7 @@ class AccessRule extends Model
     {
         return $query->where(function ($q) use ($modelClass) {
             $q->where('ruleable_type', $modelClass)
-              ->orWhereNull('ruleable_type'); // Include global rules
+                ->orWhereNull('ruleable_type'); // Include global rules
         });
     }
 

@@ -2,8 +2,9 @@
 
 declare(strict_types=1);
 
-namespace YourVendor\LaravelModelAcl\Rules;
+namespace OthmanHaba\LaravelModelAcl\Rules;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Contracts\Auth\Authenticatable;
 
@@ -19,14 +20,15 @@ class AttributeRule extends BaseAccessRule
     protected ?string $operator;
 
     public function __construct(
-        ?string $model_attribute = null,
-        ?string $user_attribute = null,
-        mixed $static_value = null,
-        ?string $operator = '=',
+        ?string          $model_attribute = null,
+        ?string          $user_attribute = null,
+        mixed            $static_value = null,
+        ?string          $operator = '=',
         ?Authenticatable $_user = null,
-        ?int $_priority = null,
-        ?bool $_is_deny_rule = null
-    ) {
+        ?int             $_priority = null,
+        ?bool            $_is_deny_rule = null
+    )
+    {
         parent::__construct($_user, $_priority, $_is_deny_rule);
 
         $this->modelAttribute = $model_attribute;
@@ -57,7 +59,7 @@ class AttributeRule extends BaseAccessRule
         return true;
     }
 
-    public function scope($query, Authenticatable $user)
+    public function scope($query, Authenticatable $user): Builder
     {
         if (!$this->modelAttribute) {
             return $query;
@@ -78,7 +80,6 @@ class AttributeRule extends BaseAccessRule
     protected function compare(mixed $a, mixed $b, string $operator): bool
     {
         return match ($operator) {
-            '=' => $a == $b,
             '!=' => $a != $b,
             '>' => $a > $b,
             '>=' => $a >= $b,
@@ -90,17 +91,16 @@ class AttributeRule extends BaseAccessRule
         };
     }
 
-    protected function applyOperator($query, string $column, mixed $value, string $operator)
+    protected function applyOperator(Builder $query, string $column, mixed $value, string $operator): Builder
     {
         return match ($operator) {
-            '=' => $query->where($column, '=', $value),
             '!=' => $query->where($column, '!=', $value),
             '>' => $query->where($column, '>', $value),
             '>=' => $query->where($column, '>=', $value),
             '<' => $query->where($column, '<', $value),
             '<=' => $query->where($column, '<=', $value),
-            'in' => $query->whereIn($column, (array) $value),
-            'not_in' => $query->whereNotIn($column, (array) $value),
+            'in' => $query->whereIn($column, (array)$value),
+            'not_in' => $query->whereNotIn($column, (array)$value),
             default => $query->where($column, '=', $value),
         };
     }

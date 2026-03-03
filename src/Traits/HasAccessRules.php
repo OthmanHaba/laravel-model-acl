@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace YourVendor\LaravelModelAcl\Traits;
+namespace OthmanHaba\LaravelModelAcl\Traits;
 
-use YourVendor\LaravelModelAcl\Contracts\Authorizable;
-use YourVendor\LaravelModelAcl\Models\AccessRule;
+use OthmanHaba\LaravelModelAcl\Contracts\Authorizable;
+use OthmanHaba\LaravelModelAcl\Models\AccessRule;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 /**
@@ -101,7 +101,7 @@ trait HasAccessRules
      */
     public function scopeAccessibleBy($query, $user, string $action)
     {
-        return app(\YourVendor\LaravelModelAcl\Services\AccessControlService::class)
+        return app(\OthmanHaba\LaravelModelAcl\Services\AccessControlService::class)
             ->filterQuery($user, $action, $query);
     }
 }

@@ -2,8 +2,9 @@
 
 declare(strict_types=1);
 
-namespace YourVendor\LaravelModelAcl\Rules;
+namespace OthmanHaba\LaravelModelAcl\Rules;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Contracts\Auth\Authenticatable;
 
@@ -30,7 +31,7 @@ class StatusRule extends BaseAccessRule
 
     public function passes(Authenticatable $user, Model $model): bool
     {
-        if (!$this->allowedStatuses || empty($this->allowedStatuses)) {
+        if (empty($this->allowedStatuses)) {
             return true; // No restriction if not configured
         }
 
@@ -44,9 +45,9 @@ class StatusRule extends BaseAccessRule
         return in_array($modelStatus, $this->allowedStatuses);
     }
 
-    public function scope($query, Authenticatable $user)
+    public function scope(Builder $query, Authenticatable $user): Builder
     {
-        if ($this->allowedStatuses && !empty($this->allowedStatuses)) {
+        if (!empty($this->allowedStatuses)) {
             $query->whereIn($this->statusColumn, $this->allowedStatuses);
         }
 

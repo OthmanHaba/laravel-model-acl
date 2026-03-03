@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace YourVendor\LaravelModelAcl;
+namespace OthmanHaba\LaravelModelAcl;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Gate;
-use YourVendor\LaravelModelAcl\Services\AccessControlService;
-use YourVendor\LaravelModelAcl\Services\RuleResolver;
-use YourVendor\LaravelModelAcl\Contracts\RuleResolverContract;
-use YourVendor\LaravelModelAcl\Console\Commands\MakeAccessRuleCommand;
+use OthmanHaba\LaravelModelAcl\Services\AccessControlService;
+use OthmanHaba\LaravelModelAcl\Services\RuleResolver;
+use OthmanHaba\LaravelModelAcl\Contracts\RuleResolverContract;
+use OthmanHaba\LaravelModelAcl\Console\Commands\MakeAccessRuleCommand;
 
 class AccessControlServiceProvider extends ServiceProvider
 {
@@ -82,7 +82,7 @@ class AccessControlServiceProvider extends ServiceProvider
             $model = $arguments[0];
 
             // Check if model uses HasAccessRules trait
-            if (!in_array(\YourVendor\LaravelModelAcl\Traits\HasAccessRules::class, class_uses_recursive($model))) {
+            if (!in_array(\OthmanHaba\LaravelModelAcl\Traits\HasAccessRules::class, class_uses_recursive($model))) {
                 return null; // Not managed by this package
             }
 

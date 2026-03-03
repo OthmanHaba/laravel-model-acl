@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace YourVendor\LaravelModelAcl\Console\Commands;
+namespace OthmanHaba\LaravelModelAcl\Console\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Str;
@@ -65,7 +65,7 @@ declare(strict_types=1);
 
 namespace {{namespace}};
 
-use YourVendor\LaravelModelAcl\Rules\BaseAccessRule;
+use OthmanHaba\LaravelModelAcl\Rules\BaseAccessRule;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Contracts\Auth\Authenticatable;
 

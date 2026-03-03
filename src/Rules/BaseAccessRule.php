@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace YourVendor\LaravelModelAcl\Rules;
+namespace OthmanHaba\LaravelModelAcl\Rules;
 
-use YourVendor\LaravelModelAcl\Contracts\AccessRuleContract;
+use OthmanHaba\LaravelModelAcl\Contracts\AccessRuleContract;
 use Illuminate\Contracts\Auth\Authenticatable;
 
 abstract class BaseAccessRule implements AccessRuleContract

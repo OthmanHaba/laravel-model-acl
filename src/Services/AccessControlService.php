@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace YourVendor\LaravelModelAcl\Services;
+namespace OthmanHaba\LaravelModelAcl\Services;
 
-use YourVendor\LaravelModelAcl\Contracts\AccessRuleContract;
-use YourVendor\LaravelModelAcl\Contracts\RuleResolverContract;
-use YourVendor\LaravelModelAcl\Contracts\Authorizable;
-use YourVendor\LaravelModelAcl\Models\AccessRule;
-use YourVendor\LaravelModelAcl\Models\AccessRuleAssignment;
+use OthmanHaba\LaravelModelAcl\Contracts\AccessRuleContract;
+use OthmanHaba\LaravelModelAcl\Contracts\RuleResolverContract;
+use OthmanHaba\LaravelModelAcl\Contracts\Authorizable;
+use OthmanHaba\LaravelModelAcl\Models\AccessRule;
+use OthmanHaba\LaravelModelAcl\Models\AccessRuleAssignment;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Support\Collection;
@@ -120,12 +120,12 @@ class AccessControlService
     /**
      * Get rules for a specific assignable (user, role, etc.)
      *
-     * @param mixed $assignable
+     * @param Model $assignable
      * @param string $action
      * @param string $modelClass
      * @return Collection
      */
-    protected function getRulesForAssignable($assignable, string $action, string $modelClass): Collection
+    protected function getRulesForAssignable(Model $assignable, string $action, string $modelClass): Collection
     {
         return AccessRule::query()
             ->active()

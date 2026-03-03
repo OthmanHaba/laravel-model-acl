@@ -1,12 +1,12 @@
 {
-    "name": "yourvendor/laravel-model-acl",
+    "name": "othmanhaba/laravel-model-acl",
     "description": "Dynamic, rule-based access control for any Laravel model with support for Gates, Policies, and Spatie Permissions",
     "type": "library",
     "license": "MIT",
     "authors": [
         {
-            "name": "Your Name",
-            "email": "your.email@example.com"
+            "name": "Othman Haba",
+            "email": "othman@othmanhaba.com"
         }
     ],
     "require": {
@@ -25,18 +25,18 @@
     },
     "autoload": {
         "psr-4": {
-            "YourVendor\\LaravelModelAcl\\": "src/"
+            "OthmanHaba\\LaravelModelAcl\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "YourVendor\\LaravelModelAcl\\Tests\\": "tests/"
+            "OthmanHaba\\LaravelModelAcl\\Tests\\": "tests/"
         }
     },
     "extra": {
         "laravel": {
             "providers": [
-                "YourVendor\\LaravelModelAcl\\AccessControlServiceProvider"
+                "OthmanHaba\\LaravelModelAcl\\AccessControlServiceProvider"
             ]
         }
     },

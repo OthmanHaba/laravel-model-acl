@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace YourVendor\LaravelModelAcl\Traits;
+namespace OthmanHaba\LaravelModelAcl\Traits;
 
-use YourVendor\LaravelModelAcl\Models\AccessRule;
-use YourVendor\LaravelModelAcl\Models\AccessRuleAssignment;
+use OthmanHaba\LaravelModelAcl\Models\AccessRule;
+use OthmanHaba\LaravelModelAcl\Models\AccessRuleAssignment;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 
@@ -87,7 +87,7 @@ trait CanBeRestricted
      */
     public function canAccess(string $action, $model): bool
     {
-        return app(\YourVendor\LaravelModelAcl\Services\AccessControlService::class)
+        return app(\OthmanHaba\LaravelModelAcl\Services\AccessControlService::class)
             ->can($this, $action, $model);
     }
 
