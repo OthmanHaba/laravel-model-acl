@@ -23,9 +23,6 @@ return new class extends Migration
 
             // Unique constraint - each rule can only be assigned once to each entity
             $table->unique(['access_rule_id', 'assignable_type', 'assignable_id'], 'unique_assignment');
-
-            // Performance index
-            $table->index(['assignable_type', 'assignable_id']);
         });
     }
 

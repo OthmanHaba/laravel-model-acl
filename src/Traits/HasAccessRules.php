@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace OthmanHaba\LaravelModelAcl\Traits;
 
-use OthmanHaba\LaravelModelAcl\Contracts\Authorizable;
 use OthmanHaba\LaravelModelAcl\Models\AccessRule;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 
@@ -23,16 +22,10 @@ trait HasAccessRules
 
     /**
      * Get the resolution logic for this model
-     * Override this method in your model if implementing Authorizable interface
-     *
-     * @return string
+     * Override this method in your model to customize
      */
     public function getAccessResolutionLogic(): string
     {
-        if ($this instanceof Authorizable) {
-            return $this->getAccessResolutionLogic();
-        }
-
         $modelClass = static::class;
         $modelConfig = config("access-control.models.{$modelClass}", []);
 
@@ -41,16 +34,10 @@ trait HasAccessRules
 
     /**
      * Get the scope grouping strategy for this model
-     * Override this method in your model if implementing Authorizable interface
-     *
-     * @return string
+     * Override this method in your model to customize
      */
     public function getScopeGroupingStrategy(): string
     {
-        if ($this instanceof Authorizable) {
-            return $this->getScopeGroupingStrategy();
-        }
-
         $modelClass = static::class;
         $modelConfig = config("access-control.models.{$modelClass}", []);
 
@@ -59,15 +46,10 @@ trait HasAccessRules
 
     /**
      * Get the action prefix for this model's rules
-     *
-     * @return string
+     * Override this method in your model to customize
      */
     public function getActionPrefix(): string
     {
-        if ($this instanceof Authorizable) {
-            return $this->getActionPrefix();
-        }
-
         $modelClass = static::class;
         $modelConfig = config("access-control.models.{$modelClass}", []);
 
@@ -76,15 +58,10 @@ trait HasAccessRules
 
     /**
      * Determine if policies should be integrated
-     *
-     * @return bool
+     * Override this method in your model to customize
      */
     public function shouldIntegrateWithPolicies(): bool
     {
-        if ($this instanceof Authorizable) {
-            return $this->shouldIntegrateWithPolicies();
-        }
-
         $modelClass = static::class;
         $modelConfig = config("access-control.models.{$modelClass}", []);
 
