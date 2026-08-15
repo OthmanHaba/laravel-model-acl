@@ -57,10 +57,14 @@ class AccessControlServiceProvider extends ServiceProvider
             ]);
         }
 
-        // Invalidate cached rule lookups when rules change
+        // Invalidate cached rule lookups when rules or their assignments change.
+        // Assignment events cover writes made outside the CanBeRestricted trait
+        // (e.g. an admin UI editing assignments directly).
         if (config('access-control.cache.enabled', false)) {
             \OthmanHaba\LaravelModelAcl\Models\AccessRule::saved(fn() => AccessControlService::flushCache());
             \OthmanHaba\LaravelModelAcl\Models\AccessRule::deleted(fn() => AccessControlService::flushCache());
+            \OthmanHaba\LaravelModelAcl\Models\AccessRuleAssignment::saved(fn() => AccessControlService::flushCache());
+            \OthmanHaba\LaravelModelAcl\Models\AccessRuleAssignment::deleted(fn() => AccessControlService::flushCache());
         }
 
         // Register `acl` route middleware alias
