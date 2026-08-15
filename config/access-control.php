@@ -137,6 +137,7 @@ return [
         'date_range' => \OthmanHaba\LaravelModelAcl\Rules\DateRangeRule::class,
         'ownership' => \OthmanHaba\LaravelModelAcl\Rules\OwnershipRule::class,
         'attribute' => \OthmanHaba\LaravelModelAcl\Rules\AttributeRule::class,
+        'filter' => \OthmanHaba\LaravelModelAcl\Rules\FilterRule::class,
     ],
 
     /*

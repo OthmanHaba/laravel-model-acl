@@ -285,6 +285,28 @@ Compare a model attribute to a user attribute or a static value.
 'settings' => ['model_attribute' => 'status', 'static_value' => ['open', 'pending'], 'operator' => 'in'],
 ```
 
+### FilterRule
+Restrict with a list of column/operator/value clauses combined with `and`/`or`.
+AND binds tighter than OR (standard SQL precedence), and the same grouping drives
+both `passes()` and `scope()` so per-record and per-query checks always agree.
+
+| Setting | Default | Meaning |
+|--------|---------|---------|
+| `clauses` | `[]` | List of `['column', 'operator', 'value', 'boolean']`. `boolean` (`and`/`or`) joins a clause to the previous one; ignored on the first. |
+
+Operators: `=`, `!=`, `>`, `>=`, `<`, `<=`, `in`, `not_in`, `contains`. For `in`/`not_in`
+the value may be an array or a comma-separated string.
+
+```php
+'rule_class' => \OthmanHaba\LaravelModelAcl\Rules\FilterRule::class,
+// (priority > 3 AND status = open) OR amount <= 100
+'settings' => ['clauses' => [
+    ['column' => 'priority', 'operator' => '>',  'value' => 3],
+    ['column' => 'status',   'operator' => '=',  'value' => 'open', 'boolean' => 'and'],
+    ['column' => 'amount',   'operator' => '<=', 'value' => 100,    'boolean' => 'or'],
+]],
+```
+
 ---
 
 ## Writing custom rules
