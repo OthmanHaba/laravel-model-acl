@@ -57,6 +57,18 @@ class AccessControlServiceProvider extends ServiceProvider
             ]);
         }
 
+        // Invalidate cached rule lookups when rules change
+        if (config('access-control.cache.enabled', false)) {
+            \OthmanHaba\LaravelModelAcl\Models\AccessRule::saved(fn() => AccessControlService::flushCache());
+            \OthmanHaba\LaravelModelAcl\Models\AccessRule::deleted(fn() => AccessControlService::flushCache());
+        }
+
+        // Register `acl` route middleware alias
+        $this->app['router']->aliasMiddleware(
+            'acl',
+            \OthmanHaba\LaravelModelAcl\Http\Middleware\AccessControlMiddleware::class
+        );
+
         // Register Gate integration
         if (config('access-control.integrations.laravel_gates', true)) {
             $this->registerGateIntegration();
@@ -96,8 +108,8 @@ class AccessControlServiceProvider extends ServiceProvider
             $action = $ability;
 
             try {
-                $canAccess = $service->can($user, $action, $model);
-                return $canAccess ? true : null; // Return null to allow policies to run
+                // true = grant, false = deny (authoritative), null = no rules -> let policies run
+                return $service->decide($user, $action, $model);
             } catch (\Exception $e) {
                 // Log error if logging is enabled
                 if (config('access-control.logging.enabled', false)) {

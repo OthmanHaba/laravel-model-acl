@@ -49,6 +49,8 @@ trait CanBeRestricted
             'assignable_type' => static::class,
             'assignable_id' => $this->id,
         ]);
+
+        \OthmanHaba\LaravelModelAcl\Services\AccessControlService::flushCache();
     }
 
     /**
@@ -65,6 +67,8 @@ trait CanBeRestricted
             ->where('assignable_type', static::class)
             ->where('assignable_id', $this->id)
             ->delete();
+
+        \OthmanHaba\LaravelModelAcl\Services\AccessControlService::flushCache();
     }
 
     /**
@@ -76,6 +80,8 @@ trait CanBeRestricted
     public function syncAccessRules(array $ruleIds): void
     {
         $this->assignedAccessRules()->sync($ruleIds);
+
+        \OthmanHaba\LaravelModelAcl\Services\AccessControlService::flushCache();
     }
 
     /**
